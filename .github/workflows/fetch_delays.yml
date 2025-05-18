@@ -17,11 +17,11 @@ jobs:
           r-version: '4.2'
 
       - name: Install R packages
-        run: |
-          install.packages(
-            c("httr","jsonlite","dplyr","purrr","tibble","stringr"),
-            repos="https://cloud.r-project.org"
-          )
+        run: >
+          Rscript -e 'install.packages(
+             c("httr","jsonlite","dplyr","purrr","tibble","stringr"),
+             repos="https://cloud.r-project.org"
+          )'
 
       - name: Run fetch_delays.R
         run: Rscript fetch_delays.R
