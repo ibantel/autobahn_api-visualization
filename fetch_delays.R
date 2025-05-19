@@ -123,7 +123,7 @@ fetch_delays <- function(roadId) {
   )
   if (is.null(warn_dat) || (is.data.frame(warn_dat) && nrow(warn_dat)==0) ||
       (!is.data.frame(warn_dat) && length(warn_dat)==0)) {
-    message("\t No warnings for ", roadId,)
+    message("\t No warnings for ", roadId)
     return(NULL)
   }
   
