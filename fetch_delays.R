@@ -2,7 +2,7 @@
 # In detail:
 # - List motorways via GET /.
 # - Pull warnings per motorway and clean
-
+install.packages(c("httr","jsonlite","dplyr","purrr","tibble","stringr"))
 
 # load libraries----
 library(httr)
