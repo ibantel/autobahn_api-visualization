@@ -7,6 +7,10 @@
 # load libraries----
 library(httr)
 library(jsonlite)
+library(dplyr)
+library(purrr)
+library(tibble)
+library(stringr)
 
 # fetch motorways----
 base_url <- "https://verkehr.autobahn.de/o/autobahn"
