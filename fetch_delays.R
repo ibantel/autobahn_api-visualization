@@ -87,6 +87,6 @@ all_delays <- all_delays %>%
 # write timestamped CSV to a fixed path----
 out_dir <- "data"
 if (!dir.exists(out_dir)) dir.create(out_dir)
-out_file <- file.path(out_dir, paste0("delays_", format(Sys.time(), "%Y%m%d-%H%M%s"), ".csv"))
+out_file <- file.path(out_dir, paste0("delays_", format(Sys.time(), tz="Europe/Berlin", "%Y%m%d-%H%M%s"), ".csv"))
 write.csv(all_delays, out_file, row.names = FALSE)
 message("Wrote: ", out_file)
