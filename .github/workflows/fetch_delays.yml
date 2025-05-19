@@ -17,14 +17,21 @@ jobs:
         with:
           r-version: '4.2.3'
                 
-      - name: Confirm R version  
-        run: R --version
+      - name: Confirm R version
+        run: |
+          R --version
+          Rscript -e 'cat(.libPaths(), sep = "\n")'
 
       - name: Install R packages
-        run: >
+        run: |
+          # ensure folder for installation exists
+          mkdir -p "${R_LIBS_USER}"
+          
+          # install into the folder 
           Rscript -e 'install.packages(
-             c("httr","jsonlite","dplyr","purrr","tibble","stringr"),
-             repos="https://cloud.r-project.org"
+            c("httr","jsonlite","dplyr","purrr","tibble","stringr"),
+            lib = Sys.getenv("R_LIBS_USER"),
+            repos="https://cloud.r-project.org"
           )'
 
       - name: Run fetch_delays.R
