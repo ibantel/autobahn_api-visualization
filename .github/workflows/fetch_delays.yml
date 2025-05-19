@@ -22,6 +22,14 @@ jobs:
           R --version
           Rscript -e 'cat(.libPaths(), sep = "\n")'
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev
+
       - name: Install R packages
         run: |
           # ensure folder for installation exists
