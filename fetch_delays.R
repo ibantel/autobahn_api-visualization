@@ -48,27 +48,27 @@ fetch_delays <- function(roadId) {
     })
     
     # helper to provide defaults:
-    %||% <- function(a, b) if (is.null(a)) b else a
+    null_or <- function(a, b) if (is.null(a)) b else a
     
     # clean details and parse into df
     details_tbl <-  map_dfr(details, ~ {
-        tibble(
-            road          = roadId,
-            identifier    = .x$identifier %||% NA_character_,
-            extent        = .x$extent %||% NA_character_,
-            point         = .x$point %||% NA_character_,
-            display_type  = .x$display_type %||% NA_character_,
-            title         = .x$title %||% NA_character_,
-            subtitle      = .x$subtitle %||% NA_character_,
-            delay_minutes = as.numeric(.x$delayTimeValue %||% .x$delayInMinutes %||% NA_real_),
-            abnormalTrafficType = .x$abnormalTrafficType %||% NA_character_,
-            averageSpeed  = .x$averageSpeed %||% NA_character_,
-            startTimestamp = .x$startTimestamp,
-            description   = paste(.x$description, collapse=" ", recycle0=T) %||% NA_character_,
-            latitude      = as.numeric(.x$coordinate$lat   %||% NA_real_),
-            longitude     = as.numeric(.x$coordinate$long  %||% NA_real_),
-            #geometry_raw  = list(.x$geometry %||% list(NULL))
-        )
+      tibble(
+        road                = roadId,
+        identifier          = null_or(.x$identifier          , NA_character_),
+        extent              = null_or(.x$extent              , NA_character_),
+        point               = null_or(.x$point               , NA_character_),
+        display_type        = null_or(.x$display_type        , NA_character_),
+        title               = null_or(.x$title               , NA_character_),
+        subtitle            = null_or(.x$subtitle            , NA_character_),
+        delay_minutes       = null_or(.x$delayTimeValue      , null_or(.x$delayInMinutes, NA_real_)) %>% as.numeric(),
+        abnormalTrafficType = null_or(.x$abnormalTrafficType , NA_character_),
+        averageSpeed        = null_or(.x$averageSpeed        , NA_character_),
+        startTimestamp      = .x$startTimestamp,
+        description         = null_or(paste(.x$description, collapse=" ", recycle0=T), NA_character_),
+        latitude            = null_or(.x$coordinate$lat      , NA_real_) %>% as.numeric(),
+        longitude           = null_or(.x$coordinate$long     , NA_real_) %>% as.numeric(),
+        #geometry_raw        = null_or(list(.x$geometry), list(NULL))
+      ) 
     })
     
     return(details_tbl)
