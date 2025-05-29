@@ -184,10 +184,6 @@ all_delays <- roads %>%
     discard(is.null) %>%
     bind_rows()
 
-# clean data frame----
-all_delays <- all_delays %>% 
-    mutate(startTimestamp = as.Date(startTimestamp))
-
 # write timestamped CSV to a fixed path----
 out_dir <- "data"
 if (!dir.exists(out_dir)) dir.create(out_dir)
