@@ -3,14 +3,18 @@ library(sf)
 library(tidyverse)
 
 # load data ----
-delay_data_r <- 
-  list.files("./data", pattern="*.csv", full.names=TRUE) %>% 
+delay_data_files <- list.files("./data", pattern="*.csv", full.names=TRUE)
+
+delay_data_r <- delay_data_files %>% 
   lapply(., read_csv) %>% 
   bind_rows()
 
 delay_data <- delay_data_r %>%
     distinct(identifier, .keep_all = TRUE) %>%
     arrange(identifier)
+
+delay_data %>% 
+  write_csv("./delays_20250519-1128_delays_20250531-1627_distinct")
 
 # prepare data ----
 delay_data_filtered_by_length <- delay_data %>% 
