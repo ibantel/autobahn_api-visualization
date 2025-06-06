@@ -12,16 +12,18 @@ delay_data_r <- delay_data_files %>%
 delay_data <- delay_data_r %>%
     distinct(identifier, .keep_all = TRUE) %>%
     arrange(identifier)
+# delay_data %>% write_csv("./data/delays_20250519-1128_delays_20250605-2102_distinct.csv")
 
-delay_data %>% 
-  write_csv("./delays_20250519-1128_delays_20250531-1627_distinct")
 
 # prepare data ----
 delay_data_filtered_by_length <- delay_data %>% 
   filter(delay_minutes > 5) %>% 
   mutate(day_of_week = weekdays(startTimestamp, abbreviate=T),
-         weekend_day = ifelse(day_of_week %in% c("Sat", "Sun"), "Sat/Sun", "Weekday"),
-         weekend_day = fct_relevel(weekend_day, "Weekday", "Sat/Sun"))
+         weekend_day = ifelse(day_of_week %in% c("Sat", "Sun"), "Weekend", "Weekday"),
+         weekend_day = fct_relevel(weekend_day, "Weekday", "Weekend"))
+
+# 
+delay_data_filtered_by_length %>% write_csv("./app/app_data/data_plotting_app.csv")
 
 # prepare plotting ----
 
